@@ -63,6 +63,50 @@
             </div>
 
         </div>
+        <button id="addTodoBtn">Add Todo</button>
+
+        <div class="navbar">Add new List</div>
+        <dialog id="addTodoModal">
+            <header class="modal-header">Add New Todo</header>
+            <form id="todoModalForm">
+                <div class="user-inputs">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="todo_title">
+                    <label for="dueDate">Due Date</label>
+                    <input type="date" id="dueDate" name="todo_due_date">
+                    <fieldset class="todo-priority-radios">
+                        <legend>Priority</legend>
+                        <div>
+                            <label for="Low">Low</label>
+                            <input type="radio" id="low" name="todo_priority" value="low" checked>
+                            <label for="med">Medium</label>
+                            <input type="radio" id="med" name="todo_priority" value="med">
+                            <label for="high">High</label>
+                            <input type="radio" id="high" name="todo_priority" value="high">
+                        </div>
+                    </fieldset>
+                    <label for="description">Description</label>
+                    <input type="text" id="description" name="todo_description">
+                    <!-- <label for="notes">Notes</label>
+                    <input type="text" id="notes" name="todo_notes"> -->
+                </div>
+                <div>
+                    <button id="todoCancelBtn" formmethod="dialog" autofocus>Cancel</button>
+                    <button id="todoConfirmBtn" value="default">Confirm</button>
+                </div>
+            </form>
+        </dialog>
+        <dialog id="addProjectModal">
+            <header class="modal-header">Add New Project</header>
+            <form id="projectModalForm">
+                <label for="project-name">Name</label>
+                <input type="text" id="project-name" name="project_name">
+            </form>
+            <div>
+                <button id="projectCancelBtn" formmethod="dialog" autofocus>Cancel</button>
+                <button id="projectConfirmBtn" value="default">Confirm</button>
+            </div>
+        </dialog>
     </div>
 </body>
 </html>
