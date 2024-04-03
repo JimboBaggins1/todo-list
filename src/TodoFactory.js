@@ -5,10 +5,10 @@ export function CreateTodo (title, dueDate, priority, description/*, notes*/) {
 
     // properties
     const id = uuidv4();
-    const getTitle = () => title;
-    const getDueDate = () => dueDate;
-    const getPriority = () => priority;
-    const getDescription = () => description;
+    // const getTitle = () => title;
+    // const getDueDate = () => dueDate;
+    // const getPriority = () => priority;
+    // const getDescription = () => description;
     // const getNotes =() => notes;
 
     // methods
@@ -22,5 +22,5 @@ export function CreateTodo (title, dueDate, priority, description/*, notes*/) {
     // };
 
 
-    return { getTitle, getDueDate, getPriority, getDescription, /*getNotes,*/ editTitle, editDueDate, editPriority, editDescription, /*editNotes, displayTodo,*/ id };
+    return { title, dueDate, priority, description, /*getNotes,*/ editTitle, editDueDate, editPriority, editDescription, /*editNotes, displayTodo,*/ id };
 };

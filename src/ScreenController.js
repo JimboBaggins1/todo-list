@@ -1,4 +1,5 @@
 import { CreateProject } from "./ProjectFactory";
+import { CreateTodo } from "./TodoFactory";
 import Bin from "./images/bin-icon.svg";
 
 export function ScreenController() {
@@ -128,7 +129,7 @@ export function ScreenController() {
       // create a container div for the project and the bin elements
       const projectContainer = document.createElement("div");
       projectContainer.classList.add("project-container");
-      
+
       // create an li to list the project
       const projectElement = document.createElement("li");
       projectElement.textContent = project.name;
@@ -170,8 +171,12 @@ export function ScreenController() {
   };
 
   // add new todo
-  function addNewTodo() {
-    
+  function addNewTodo(title, dueDate, priority, description) {
+    // find active project
+    const activeProject = FindActiveProject();
+    console.log(activeProject);
+    activeProject.addTodo(CreateTodo(title, dueDate, priority, description));
+    console.log(activeProject.getTodoArray());
   };
 
   // remove existing todo
@@ -195,6 +200,34 @@ export function ScreenController() {
   // add new todo
   addTodoBtn.addEventListener("click", (event) => {
     event.preventDefault();
-    
+    const todoTitle = document.getElementById("title").value;
+    const todoDate = document.getElementById("dueDate").value;
+    const todoPriority = document.querySelector('input[name="todo_priority"]:checked').value;
+    const todoDescription = document.getElementById("description").value;
+
+    addNewTodo(todoTitle, todoDate, todoPriority, todoDescription);
+    todoModal.close();
   });
+
+
+  // function to find active project
+  function FindActiveProject() {
+    // get active project
+    const activeProjectElem = document.querySelector(".selected");
+    const activeProjectId = activeProjectElem.getAttribute("id");
+    let activeProject;
+    // TODO improve basic error handling
+    if (!activeProjectElem) {
+      console.log("No project selected");
+      return;
+    };
+
+    // find the active project in projectArray
+    projectArray.forEach(project => {
+      if (project.id === activeProjectId) {
+        activeProject = project;
+      };
+    });
+    return activeProject;
+  };
 }
