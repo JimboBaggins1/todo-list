@@ -55,9 +55,13 @@ h1,
     background-color: #e2e8f0;
 }
 
-.project {
+.project-container {
     display: flex;
-    column-gap: 50px;
+    /* column-gap: 50px; */
+}
+
+.project {
+    flex: 1 0 90px;
 }
 
 .todo {
