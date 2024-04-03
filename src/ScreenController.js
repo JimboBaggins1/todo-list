@@ -17,6 +17,8 @@ export function ScreenController() {
   const projectModal = document.getElementById("addProjectModal");
   const closeProjectModalBtn = document.getElementById("projectCancelBtn");
   const addProjectBtn = document.getElementById("projectConfirmBtn");
+  // TODO move this
+  const mainContentContainer = document.querySelector(".main-content");
 
   // function to reset project modal
   const resetProjectModal = () => {
@@ -52,7 +54,7 @@ export function ScreenController() {
     const projectName = document.getElementById("project-name").value;
     addProject(projectName);
     projectModal.close();
-    UpdateDisplay();
+    UpdateSidebarDisplay();
 
     // DBG:
     console.log(projectArray);
@@ -67,11 +69,51 @@ export function ScreenController() {
       const idToRemove = target.getAttribute("data-project-id");
       removeProject(idToRemove);
     }
-    UpdateDisplay();
+    UpdateSidebarDisplay();
   });
 
+  // navigate between projects
+  listContainer.addEventListener("click", (event) => {
+    const target = event.target;
+
+    // check if clicking on project container
+    if (target.matches(".project")) {
+      ClearClass(".selected");
+      const activeProjectId = target.getAttribute("id");
+      const selectedElem = document.getElementById(activeProjectId);
+      console.log(selectedElem);
+      selectedElem.classList.add("selected");
+      projectArray.forEach(project => {
+        if (project.id === activeProjectId) {
+          mainContentContainer.textContent = project.name;
+          UpdateMainDisplay(project);
+        };
+      });
+    };
+  });
+
+  // generic clear class function
+  function ClearClass(classToRemove) {
+    Array.from(document.querySelectorAll(classToRemove)).forEach(
+      elem => elem.classList.remove(classToRemove)
+    );
+  };
+
+  // logic to update main content display
+  function UpdateMainDisplay(projectObj) {
+    // clear current display
+    mainContentContainer.textContent = "";
+
+    // create heading with project title
+    const projectHeader = document.createElement("h1");
+    projectHeader.textContent = projectObj.name;
+    mainContentContainer.appendChild(projectHeader);
+
+    // loop through the todos in current project
+  };
+
   // logic to display projects in sidebar
-  function UpdateDisplay() {
+  function UpdateSidebarDisplay() {
     // clear display
     listContainer.textContent = "";
 
@@ -85,9 +127,13 @@ export function ScreenController() {
     projectArray.forEach((project) => {
       // create a container div for the project and the bin elements
       const projectContainer = document.createElement("div");
+      projectContainer.classList.add("project-container");
+      
       // create an li to list the project
       const projectElement = document.createElement("li");
       projectElement.textContent = project.name;
+      projectElement.classList.add("project");
+      projectElement.setAttribute("id", project.id);
 
       // create the bin icon. Set data-project-id as the unique project id, used to identify which bin is being clicked to remove project
       const binIcon = CreateBin();
@@ -101,7 +147,7 @@ export function ScreenController() {
       listContainer.appendChild(projectContainer);
     });
   }
-  UpdateDisplay();
+  UpdateSidebarDisplay();
 
   // create the bin icons
   function CreateBin() {
