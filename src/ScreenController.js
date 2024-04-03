@@ -113,5 +113,42 @@ export function ScreenController() {
   }
 
   // logic to handle creation and deletion of todos
-  
+  const openTodoModalBtn = document.getElementById("addNewTodo");
+  const todoModal = document.getElementById("addTodoModal");
+  const closeTodoModalBtn = document.getElementById("todoCancelBtn");
+  const addTodoBtn = document.getElementById("todoConfirmBtn");
+
+  // function to reset todo modal
+  const resetTodoModal = () => {
+    document.getElementById("todoModalForm").reset();
+  };
+
+  // add new todo
+  function addNewTodo() {
+    
+  };
+
+  // remove existing todo
+  function removeTodo(id) {
+
+  };
+
+  // reset todo modal
+  todoModal.addEventListener("close", resetTodoModal);
+
+  // open todo modal
+  openTodoModalBtn.addEventListener("click", () => {
+    todoModal.showModal()
+  });
+
+  // close todo modal
+  closeTodoModalBtn.addEventListener("click", () => {
+    todoModal.close();
+  });
+
+  // add new todo
+  addTodoBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    
+  });
 }
