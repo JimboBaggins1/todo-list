@@ -111,6 +111,33 @@ export function ScreenController() {
     mainContentContainer.appendChild(projectHeader);
 
     // loop through the todos in current project
+    const activeProject = FindActiveProject();
+    if (activeProject.getTodoArray().length === 0) { return; };
+
+    console.log(activeProject.getTodoArray());
+    activeProject.getTodoArray().forEach(todo => {
+      const todoContainer = document.createElement('div');
+      todoContainer.setAttribute("id", todo.id);
+
+      const todoTitle = document.createElement("h2");
+      todoTitle.textContent = todo.title;
+
+      const todoDate = document.createElement("h3");
+      todoDate.textContent = todo.dueDate;
+
+      const todoPriority = document.createElement("h3");
+      todoPriority.textContent = todo.priority;
+
+      const todoDescription = document.createElement("p");
+      todoDescription.textContent = todo.description;
+
+      todoContainer.appendChild(todoTitle);
+      todoContainer.appendChild(todoDescription);
+      todoContainer.appendChild(todoDate);
+      todoContainer.appendChild(todoPriority);
+      
+      mainContentContainer.appendChild(todoContainer);
+    });
   };
 
   // logic to display projects in sidebar
@@ -171,12 +198,10 @@ export function ScreenController() {
   };
 
   // add new todo
-  function addNewTodo(title, dueDate, priority, description) {
-    // find active project
-    const activeProject = FindActiveProject();
-    console.log(activeProject);
-    activeProject.addTodo(CreateTodo(title, dueDate, priority, description));
-    console.log(activeProject.getTodoArray());
+  function addNewTodo(project, title, dueDate, priority, description) {
+    console.log(project);
+    project.addTodo(CreateTodo(title, dueDate, priority, description));
+    console.log(project.getTodoArray());
   };
 
   // remove existing todo
@@ -204,9 +229,10 @@ export function ScreenController() {
     const todoDate = document.getElementById("dueDate").value;
     const todoPriority = document.querySelector('input[name="todo_priority"]:checked').value;
     const todoDescription = document.getElementById("description").value;
-
-    addNewTodo(todoTitle, todoDate, todoPriority, todoDescription);
+    const project = FindActiveProject();
+    addNewTodo(project, todoTitle, todoDate, todoPriority, todoDescription);
     todoModal.close();
+    UpdateMainDisplay(project);
   });
 
 
