@@ -261,14 +261,18 @@ export function ScreenController() {
   // function to find active project
   function FindActiveProject() {
     // get active project
-    const activeProjectElem = document.querySelector(".selected");
-    const activeProjectId = activeProjectElem.getAttribute("id");
-    let activeProject;
-    // TODO improve basic error handling
+    let activeProject = null;
+    let activeProjectElem = document.querySelector(".selected");
+    console.log(activeProjectElem);
     if (!activeProjectElem) {
-      console.log("No project selected");
-      return;
+      console.log("No active project found. Setting default project as active...");
+      // set default project to active
+      activeProjectElem = document.getElementById(projectArray[0].id);
+      activeProjectElem.classList.add("selected");
+      activeProject = projectArray[0];
+      return activeProject;
     }
+    const activeProjectId = activeProjectElem.getAttribute("id");
 
     // find the active project in projectArray
     projectArray.forEach((project) => {
