@@ -84,21 +84,21 @@ export function ScreenController() {
       const selectedElem = document.getElementById(activeProjectId);
       console.log(selectedElem);
       selectedElem.classList.add("selected");
-      projectArray.forEach(project => {
+      projectArray.forEach((project) => {
         if (project.id === activeProjectId) {
           mainContentContainer.textContent = project.name;
           UpdateMainDisplay(project);
-        };
+        }
       });
     };
   });
 
   // generic clear class function
   function ClearClass(classToRemove) {
-    Array.from(document.querySelectorAll(classToRemove)).forEach(
-      elem => elem.classList.remove(classToRemove)
+    Array.from(document.querySelectorAll(classToRemove)).forEach((elem) =>
+      elem.classList.remove(classToRemove)
     );
-  };
+  }
 
   // logic to update main content display
   function UpdateMainDisplay(projectObj) {
@@ -110,35 +110,49 @@ export function ScreenController() {
     projectHeader.textContent = projectObj.name;
     mainContentContainer.appendChild(projectHeader);
 
-    // loop through the todos in current project
+    // check if project contains todos
     const activeProject = FindActiveProject();
-    if (activeProject.getTodoArray().length === 0) { return; };
+    if (activeProject.getTodoArray().length === 0) {
+      return;
+    }
 
+    // create container for all todos
+    const todoGroupContainer = document.createElement("div");
+    todoGroupContainer.classList.add("todo-group-container");
+
+    // loop through the todos in current project
     console.log(activeProject.getTodoArray());
-    activeProject.getTodoArray().forEach(todo => {
-      const todoContainer = document.createElement('div');
+    activeProject.getTodoArray().forEach((todo) => {
+      const todoContainer = document.createElement("div");
       todoContainer.setAttribute("id", todo.id);
+      todoContainer.classList.add("todo");
 
       const todoTitle = document.createElement("h2");
+      todoTitle.classList.add("todo-title");
       todoTitle.textContent = todo.title;
 
-      const todoDate = document.createElement("h3");
-      todoDate.textContent = todo.dueDate;
+      const todoDescription = document.createElement("p");
+      todoDescription.classList.add("todo-description");
+      todoDescription.textContent = todo.description;
 
       const todoPriority = document.createElement("h3");
+      todoPriority.classList.add("todo-priority");
       todoPriority.textContent = todo.priority;
 
-      const todoDescription = document.createElement("p");
-      todoDescription.textContent = todo.description;
+      const todoDate = document.createElement("h3");
+      todoDate.classList.add("todo-date");
+      todoDate.textContent = todo.dueDate;
 
       todoContainer.appendChild(todoTitle);
       todoContainer.appendChild(todoDescription);
-      todoContainer.appendChild(todoDate);
       todoContainer.appendChild(todoPriority);
+      todoContainer.appendChild(todoDate);
       
-      mainContentContainer.appendChild(todoContainer);
+      todoGroupContainer.appendChild(todoContainer);
     });
-  };
+
+    mainContentContainer.appendChild(todoGroupContainer);
+  }
 
   // logic to display projects in sidebar
   function UpdateSidebarDisplay() {
@@ -202,19 +216,17 @@ export function ScreenController() {
     console.log(project);
     project.addTodo(CreateTodo(title, dueDate, priority, description));
     console.log(project.getTodoArray());
-  };
+  }
 
   // remove existing todo
-  function removeTodo(id) {
-
-  };
+  function removeTodo(id) {}
 
   // reset todo modal
   todoModal.addEventListener("close", resetTodoModal);
 
   // open todo modal
   openTodoModalBtn.addEventListener("click", () => {
-    todoModal.showModal()
+    todoModal.showModal();
   });
 
   // close todo modal
@@ -227,7 +239,9 @@ export function ScreenController() {
     event.preventDefault();
     const todoTitle = document.getElementById("title").value;
     const todoDate = document.getElementById("dueDate").value;
-    const todoPriority = document.querySelector('input[name="todo_priority"]:checked').value;
+    const todoPriority = document.querySelector(
+      'input[name="todo_priority"]:checked'
+    ).value;
     const todoDescription = document.getElementById("description").value;
     const project = FindActiveProject();
     addNewTodo(project, todoTitle, todoDate, todoPriority, todoDescription);
@@ -246,14 +260,14 @@ export function ScreenController() {
     if (!activeProjectElem) {
       console.log("No project selected");
       return;
-    };
+    }
 
     // find the active project in projectArray
-    projectArray.forEach(project => {
+    projectArray.forEach((project) => {
       if (project.id === activeProjectId) {
         activeProject = project;
-      };
+      }
     });
     return activeProject;
-  };
+  }
 }
