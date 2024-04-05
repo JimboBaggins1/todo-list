@@ -158,6 +158,12 @@ export function ScreenController() {
 
   // logic to display projects in sidebar
   function UpdateSidebarDisplay() {
+    const selectedElem = document.querySelector(".selected");
+    let selectedElemId = null;
+    if (selectedElem) {
+      selectedElemId = selectedElem.getAttribute("id");
+    }
+     
     // clear display
     listContainer.textContent = "";
 
@@ -168,7 +174,7 @@ export function ScreenController() {
     }
 
     // loop through projects in projectArray and display in sidebar.
-    projectArray.forEach((project) => {
+    projectArray.forEach((project, index) => {
       // create a container div for the project and the bin elements
       const projectContainer = document.createElement("div");
       projectContainer.classList.add("project-container");
@@ -179,11 +185,12 @@ export function ScreenController() {
       projectElement.classList.add("project");
       projectElement.setAttribute("id", project.id);
 
-      // create the bin icon. Set data-project-id as the unique project id, used to identify which bin is being clicked to remove project
-      const binIcon = CreateBin();
-      binIcon.setAttribute("data-project-id", project.id);
+      // ensure retain which element is selected
+      if (project.id === selectedElemId) {
+        projectElement.classList.add("selected");
+      }
 
-      // append project li and bin icon to the projectContainer div
+      // append project li to the projectContainer div
       projectContainer.appendChild(projectElement);
 
       // special case: If NOT default project create the bin icon. Set data-project-id as the unique project id, used to identify which bin is being clicked to remove project
