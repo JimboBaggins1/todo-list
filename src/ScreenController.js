@@ -81,7 +81,7 @@ export function ScreenController() {
 
     // check if clicking on project container
     if (target.matches(".project")) {
-      ClearClass(".selected");
+      ClearClass("selected");
       const activeProjectId = target.getAttribute("id");
       const selectedElem = document.getElementById(activeProjectId);
       console.log(selectedElem);
@@ -97,7 +97,8 @@ export function ScreenController() {
 
   // generic clear class function
   function ClearClass(classToRemove) {
-    Array.from(document.querySelectorAll(classToRemove)).forEach((elem) =>
+    const formattedClassToRemove = "." + classToRemove;
+    Array.from(document.querySelectorAll(formattedClassToRemove)).forEach((elem) =>
       elem.classList.remove(classToRemove)
     );
   }
