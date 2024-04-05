@@ -10,11 +10,6 @@ export function ScreenController() {
   // get element to append to
   const listContainer = document.querySelector(".list-container");
 
-  // warning message if there are no projects
-  const warningMsg = document.createElement("h3");
-  warningMsg.textContent =
-    "Oops, looks like you don't have any active projects";
-
   // logic to handle creation and deletion of projects
   const openProjectModalBtn = document.getElementById("addNewProject");
   const projectModal = document.getElementById("addProjectModal");
@@ -57,22 +52,44 @@ export function ScreenController() {
     const projectName = document.getElementById("project-name").value;
     addProject(projectName);
     projectModal.close();
+
+
     UpdateSidebarDisplay();
 
+    // set added project as active
+    ClearClass("selected");
+
+    const addedProject = projectArray[projectArray.length - 1];
+    const addedElem = document.getElementById(addedProject.id);
+    addedElem.classList.add("selected");
+    console.log(`Added proj = `);
+    console.log(addedProject);
+    UpdateSidebarDisplay();
+    UpdateMainDisplay(addedProject);
     // DBG:
-    console.log(projectArray);
+    // console.log(projectArray);
   });
 
   // remove existing project
   listContainer.addEventListener("click", (event) => {
     const target = event.target;
-
+    const activeProject = FindActiveProject();
+    console.log(`active proj ID: ${activeProject.id}`);
     // check if clicking on bin icon
     if (target.matches(".bin-icon")) {
       const idToRemove = target.getAttribute("data-project-id");
       removeProject(idToRemove);
+      console.log(idToRemove);
+      UpdateSidebarDisplay();
+
+      // Handles updating main display if the project that was just deleted was also the active project
+      if (activeProject.id === idToRemove) {
+        console.log("Deleted active project. Setting default project as active...");
+        UpdateMainDisplay(FindActiveProject());
+      }
     }
-    UpdateSidebarDisplay();
+
+
   });
 
   // navigate between projects
@@ -81,6 +98,7 @@ export function ScreenController() {
 
     // check if clicking on project container
     if (target.matches(".project")) {
+      UpdateSidebarDisplay();
       ClearClass("selected");
       const activeProjectId = target.getAttribute("id");
       const selectedElem = document.getElementById(activeProjectId);
@@ -167,12 +185,6 @@ export function ScreenController() {
     // clear display
     listContainer.textContent = "";
 
-    // display projects currently in projectArray
-    if (projectArray.length === 0) {
-      listContainer.appendChild(warningMsg);
-      return;
-    }
-
     // loop through projects in projectArray and display in sidebar.
     projectArray.forEach((project, index) => {
       // create a container div for the project and the bin elements
@@ -197,7 +209,7 @@ export function ScreenController() {
       if (index !== 0) {
         const binIcon = CreateBin();
         binIcon.setAttribute("data-project-id", project.id);
-      projectContainer.appendChild(binIcon);
+        projectContainer.appendChild(binIcon);
       }
 
       // append both to the listContainer
