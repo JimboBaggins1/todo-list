@@ -113,8 +113,7 @@ export function ScreenController() {
     mainContentContainer.appendChild(projectHeader);
 
     // check if project contains todos
-    const activeProject = FindActiveProject();
-    if (activeProject.getTodoArray().length === 0) {
+    if (projectObj.getTodoArray().length === 0) {
       return;
     }
 
@@ -123,8 +122,8 @@ export function ScreenController() {
     todoGroupContainer.classList.add("todo-group-container");
 
     // loop through the todos in current project
-    console.log(activeProject.getTodoArray());
-    activeProject.getTodoArray().forEach((todo) => {
+    console.log(projectObj.getTodoArray());
+    projectObj.getTodoArray().forEach((todo) => {
       const todoContainer = document.createElement("div");
       todoContainer.setAttribute("id", todo.id);
       todoContainer.classList.add("todo");
