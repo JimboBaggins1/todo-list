@@ -3,7 +3,9 @@ import { CreateTodo } from "./TodoFactory";
 import Bin from "./images/bin-icon.svg";
 
 export function ScreenController() {
+  // create array to store projects. Initialise with default project
   let projectArray = [];
+  addProject('Today');
 
   // get element to append to
   const listContainer = document.querySelector(".list-container");
@@ -27,7 +29,7 @@ export function ScreenController() {
   };
 
   // add new project to array
-  const addProject = (projectName) => {
+  function addProject(projectName) {
     projectArray.push(CreateProject(projectName));
   };
 
@@ -183,7 +185,13 @@ export function ScreenController() {
 
       // append project li and bin icon to the projectContainer div
       projectContainer.appendChild(projectElement);
+
+      // special case: If NOT default project create the bin icon. Set data-project-id as the unique project id, used to identify which bin is being clicked to remove project
+      if (index !== 0) {
+        const binIcon = CreateBin();
+        binIcon.setAttribute("data-project-id", project.id);
       projectContainer.appendChild(binIcon);
+      }
 
       // append both to the listContainer
       listContainer.appendChild(projectContainer);
