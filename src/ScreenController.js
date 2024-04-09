@@ -163,11 +163,17 @@ export function ScreenController() {
       todoDate.classList.add("todo-date");
       todoDate.textContent = todo.dueDate;
 
+      const binIcon = CreateBin("28px");
+      binIcon.setAttribute("data-todo-id", todo.id);
+      binIcon.classList.add("todo-bin");
+
+
       todoContainer.appendChild(todoTitle);
       todoContainer.appendChild(todoDescription);
       todoContainer.appendChild(todoPriority);
       todoContainer.appendChild(todoDate);
-      
+      todoContainer.appendChild(binIcon);
+
       todoGroupContainer.appendChild(todoContainer);
     });
 
@@ -207,7 +213,7 @@ export function ScreenController() {
 
       // special case: If NOT default project create the bin icon. Set data-project-id as the unique project id, used to identify which bin is being clicked to remove project
       if (index !== 0) {
-        const binIcon = CreateBin();
+        const binIcon = CreateBin("14px");
         binIcon.setAttribute("data-project-id", project.id);
         projectContainer.appendChild(binIcon);
       }
@@ -219,10 +225,10 @@ export function ScreenController() {
   UpdateSidebarDisplay();
 
   // create the bin icons
-  function CreateBin() {
+  function CreateBin(binSize) {
     const binImg = new Image();
     binImg.src = Bin;
-    binImg.style.width = "14px";
+    binImg.style.width = binSize;
     binImg.classList.add("bin-icon");
     return binImg;
   }
@@ -246,7 +252,10 @@ export function ScreenController() {
   }
 
   // remove existing todo
-  function removeTodo(id) {}
+  function removeTodo(id) {
+    const activeProject = FindActiveProject();
+
+  }
 
   // reset todo modal
   todoModal.addEventListener("close", resetTodoModal);
