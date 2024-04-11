@@ -118,8 +118,59 @@ export function ScreenController() {
           UpdateMainDisplay(project);
         }
       });
-    };
+    }
+
+    // check if clicking on todo bin icon
+    if (target.matches(".todo-edit")) {
+      UpdateSidebarDisplay();
+      UpdateMainDisplay(FindActiveProject());
+      // console.log(activeProject);
+      // clear all todos that are currently selected
+      ClearClass("selected-todo");
+      // clear addModalSave from addTodoBtn
+      ClearClass("addModalSave");
+      // set todo edit button as selected
+      const todoId = target.getAttribute("data-todo-id");
+      // console.log(todoId);
+      const activeTodoEditBtn = document.querySelector(
+        `[data-todo-id="${todoId}"]`
+      );
+      activeTodoEditBtn.classList.add("selected-todo");
+      // console.log(activeTodoEditBtn);
+
+      // set addTodoBtn to edit mode
+      addTodoBtn.classList.add("editModalSave");
+
+      todoModal.showModal();
+      // const todoArray = activeProject.todoArray;
+      // todoArray.forEach((todo) => {
+      //   if (todo.id === todoId) {
+      //   }
+      //   UpdateMainDisplay(activeProject);
+      // });
+    }
   });
+
+  // navigate between projects
+  // listContainer.addEventListener("click", (event) => {
+  //   const target = event.target;
+
+  //   // check if clicking on project container
+  //   if (target.matches(".project")) {
+  //     UpdateSidebarDisplay();
+  //     ClearClass("selected");
+  //     const activeProjectId = target.getAttribute("id");
+  //     const selectedElem = document.getElementById(activeProjectId);
+  //     console.log(selectedElem);
+  //     selectedElem.classList.add("selected");
+  //     projectArray.forEach((project) => {
+  //       if (project.id === activeProjectId) {
+  //         mainContentContainer.textContent = project.name;
+  //         UpdateMainDisplay(project);
+  //       }
+  //     });
+  //   };
+  // });
 
   // generic clear class function
   function ClearClass(classToRemove) {
