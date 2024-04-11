@@ -1,7 +1,7 @@
 import { CreateProject } from "./ProjectFactory";
 import { CreateTodo } from "./TodoFactory";
 import Bin from "./images/bin-icon.svg";
-
+import Edit from "./images/edit-icon.svg";
 export function ScreenController() {
   // create array to store projects. Initialise with default project
   let projectArray = [];
@@ -163,6 +163,10 @@ export function ScreenController() {
       todoDate.classList.add("todo-date");
       todoDate.textContent = todo.dueDate;
 
+      const editIcon = CreateEditBtn("28px");
+      editIcon.setAttribute("data-todo-id", todo.id);
+      editIcon.classList.add("todo-edit");
+
       const binIcon = CreateBin("28px");
       binIcon.setAttribute("data-todo-id", todo.id);
       binIcon.classList.add("todo-bin");
@@ -172,6 +176,7 @@ export function ScreenController() {
       todoContainer.appendChild(todoDescription);
       todoContainer.appendChild(todoPriority);
       todoContainer.appendChild(todoDate);
+      todoContainer.appendChild(editIcon);
       todoContainer.appendChild(binIcon);
 
       todoGroupContainer.appendChild(todoContainer);
@@ -233,11 +238,13 @@ export function ScreenController() {
     return binImg;
   }
 
-  // logic to handle creation and deletion of todos
-  const openTodoModalBtn = document.getElementById("addNewTodo");
-  const todoModal = document.getElementById("addTodoModal");
-  const closeTodoModalBtn = document.getElementById("todoCancelBtn");
-  const addTodoBtn = document.getElementById("todoConfirmBtn");
+  function CreateEditBtn(size) {
+    const editImg = new Image();
+    editImg.src = Edit;
+    editImg.style.width = size;
+    editImg.classList.add("edit-todo");
+    return editImg;
+  }
 
   // function to reset todo modal
   const resetTodoModal = () => {
