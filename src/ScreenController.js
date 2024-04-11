@@ -18,6 +18,12 @@ export function ScreenController() {
   // TODO move this
   const mainContentContainer = document.querySelector(".main-content");
 
+  // logic to handle creation and deletion of todos
+  const openTodoModalBtn = document.getElementById("addNewTodo");
+  const todoModal = document.getElementById("addTodoModal");
+  const closeTodoModalBtn = document.getElementById("todoCancelBtn");
+  const addTodoBtn = document.getElementById("todoConfirmBtn");
+
   // function to reset project modal
   const resetProjectModal = () => {
     document.getElementById("projectModalForm").reset();
