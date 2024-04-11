@@ -5,7 +5,7 @@ import Edit from "./images/edit-icon.svg";
 export function ScreenController() {
   // create array to store projects. Initialise with default project
   let projectArray = [];
-  addProject('Today');
+  addProject("Today");
 
   // get element to append to
   const listContainer = document.querySelector(".list-container");
@@ -84,7 +84,9 @@ export function ScreenController() {
 
       // Handles updating main display if the project that was just deleted was also the active project
       if (activeProject.id === idToRemove) {
-        console.log("Deleted active project. Setting default project as active...");
+        console.log(
+          "Deleted active project. Setting default project as active..."
+        );
         UpdateMainDisplay(FindActiveProject());
       }
     }
@@ -116,8 +118,8 @@ export function ScreenController() {
   // generic clear class function
   function ClearClass(classToRemove) {
     const formattedClassToRemove = "." + classToRemove;
-    Array.from(document.querySelectorAll(formattedClassToRemove)).forEach((elem) =>
-      elem.classList.remove(classToRemove)
+    Array.from(document.querySelectorAll(formattedClassToRemove)).forEach(
+      (elem) => elem.classList.remove(classToRemove)
     );
   }
 
@@ -300,7 +302,9 @@ export function ScreenController() {
     let activeProjectElem = document.querySelector(".selected");
     console.log(activeProjectElem);
     if (!activeProjectElem) {
-      console.log("No active project found. Setting default project as active...");
+      console.log(
+        "No active project found. Setting default project as active..."
+      );
       // set default project to active
       activeProjectElem = document.getElementById(projectArray[0].id);
       activeProjectElem.classList.add("selected");
