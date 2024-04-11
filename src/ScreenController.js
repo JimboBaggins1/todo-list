@@ -77,7 +77,7 @@ export function ScreenController() {
   });
 
   // remove existing project
-  listContainer.addEventListener("click", (event) => {
+  document.addEventListener("click", (event) => {
     const target = event.target;
     const activeProject = FindActiveProject();
     console.log(`active proj ID: ${activeProject.id}`);
