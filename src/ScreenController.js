@@ -59,7 +59,6 @@ export function ScreenController() {
     addProject(projectName);
     projectModal.close();
 
-
     UpdateSidebarDisplay();
 
     // set added project as active
@@ -81,7 +80,7 @@ export function ScreenController() {
     const target = event.target;
     const activeProject = FindActiveProject();
     console.log(`active proj ID: ${activeProject.id}`);
-    // check if clicking on bin icon
+     // check if clicking on bin icon
     if (target.matches(".bin-icon")) {
       const idToRemove = target.getAttribute("data-project-id");
       removeProject(idToRemove);
@@ -96,13 +95,6 @@ export function ScreenController() {
         UpdateMainDisplay(FindActiveProject());
       }
     }
-
-
-  });
-
-  // navigate between projects
-  listContainer.addEventListener("click", (event) => {
-    const target = event.target;
 
     // check if clicking on project container
     if (target.matches(".project")) {
@@ -231,7 +223,6 @@ export function ScreenController() {
       binIcon.setAttribute("data-todo-id", todo.id);
       binIcon.classList.add("todo-bin");
 
-
       todoContainer.appendChild(todoTitle);
       todoContainer.appendChild(todoDescription);
       todoContainer.appendChild(todoPriority);
@@ -252,7 +243,7 @@ export function ScreenController() {
     if (selectedElem) {
       selectedElemId = selectedElem.getAttribute("id");
     }
-     
+
     // clear display
     listContainer.textContent = "";
 
@@ -321,7 +312,6 @@ export function ScreenController() {
   // remove existing todo
   function removeTodo(id) {
     const activeProject = FindActiveProject();
-
   }
 
   // reset todo modal
@@ -353,7 +343,7 @@ export function ScreenController() {
 
     switch (event.target.getAttribute("class")) {
       case "addModalSave":
-    addNewTodo(project, todoTitle, todoDate, todoPriority, todoDescription);
+        addNewTodo(project, todoTitle, todoDate, todoPriority, todoDescription);
         break;
       case "editModalSave":
         // find current todo
@@ -382,7 +372,6 @@ export function ScreenController() {
     UpdateMainDisplay(project);
   });
 
-
   // function to find active project
   function FindActiveProject() {
     // get active project
@@ -408,5 +397,17 @@ export function ScreenController() {
       }
     });
     return activeProject;
+  }
+
+  function FindActiveTodo() {
+    const currentTodo = document.querySelector(".selected-todo");
+    const todoId = currentTodo.getAttribute("data-todo-id");
+    const activeProject = FindActiveProject();
+    const todoArray = activeProject.todoArray;
+    todoArray.forEach((todo) => {
+      if (todo.id === todoId) {
+        return todo;
+      }
+    });
   }
 }
