@@ -118,9 +118,14 @@ h1,
     grid-column: 1 / -1;
 }
 
+.todo-edit {
+    grid-column: 4 / 5;
+    grid-row: 1 / 2;
+}
+
 .todo-bin {
     grid-column: 4 / 5;
-    grid-row: 1 / -1;
+    grid-row: 2 / -1;
 }
 
 .navbar {
