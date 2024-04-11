@@ -1,33 +1,63 @@
 import { v4 as uuidv4 } from 'uuid';
 
-export function CreateProject (name) {
-
-    // define array to store todos
-    let todoArray = [];
+export class CreateProject {
+    constructor(name) {
+        this.name = name;
+    }
+    
+    // private properties
+    #array = [];
 
     // properties
-    const id = uuidv4();
-    const getTodoArray = () => todoArray;
+    id = uuidv4();
+
+    // getters
+    get todoArray() {
+        return this.#array;
+    }
 
     // methods
-    const addTodo = (todo) => todoArray.push(todo);
-    const removeTodo = (id) => {
-        todoArray = todoArray.filter(x => x.id !== id);
-    };
+    addTodo(todo) {
+        return this.#array.push(todo);
+    }
 
-    // const displayTodos = () => todoArray;
-    // const deleteTodo = (todo) => {
-    //     let x = todoArray[0];
-    //     todoArray.forEach(obj => {
-    //         Object.keys(obj).forEach(key => {
-    //             if (obj[key] === todo) {
-    //                 let index = todoArray.indexOf(obj);
-    //                 console.log(index);
-    //                 todoArray.splice(index, 1);
-    //             };
-    //         });
-    //     })
-    // };
+    removeTodo(id) {
+        return this.#array = this.#array.filter(elem => elem.id !== id)
+    }
+}
 
-    return { name, getTodoArray, addTodo, /*displayTodos,*/ removeTodo, id };
-};
+
+
+
+//TODO: Clear this up when certain not needed
+// function CreateProject (name) {
+
+//     // define array to store todos
+//     let todoArray = [];
+
+//     // properties
+//     const id = uuidv4();
+//     const getTodoArray = () => todoArray;
+
+//     // methods
+//     const addTodo = (todo) => todoArray.push(todo);
+//     const removeTodo = (id) => {
+//         todoArray = todoArray.filter(x => x.id !== id);
+//     };
+
+//     // const displayTodos = () => todoArray;
+//     // const deleteTodo = (todo) => {
+//     //     let x = todoArray[0];
+//     //     todoArray.forEach(obj => {
+//     //         Object.keys(obj).forEach(key => {
+//     //             if (obj[key] === todo) {
+//     //                 let index = todoArray.indexOf(obj);
+//     //                 console.log(index);
+//     //                 todoArray.splice(index, 1);
+//     //             };
+//     //         });
+//     //     })
+//     // };
+
+//     return { name, getTodoArray, addTodo, /*displayTodos,*/ removeTodo, id };
+// };
