@@ -329,6 +329,9 @@ export function ScreenController() {
 
   // open todo modal
   openTodoModalBtn.addEventListener("click", () => {
+    // add addModalSave class to addTodoBtn
+    ClearClass("editModalSave");
+    addTodoBtn.classList.add("addModalSave");
     todoModal.showModal();
   });
 
@@ -347,7 +350,34 @@ export function ScreenController() {
     ).value;
     const todoDescription = document.getElementById("description").value;
     const project = FindActiveProject();
+
+    switch (event.target.getAttribute("class")) {
+      case "addModalSave":
     addNewTodo(project, todoTitle, todoDate, todoPriority, todoDescription);
+        break;
+      case "editModalSave":
+        // find current todo
+        // const activeProject = FindActiveProject();
+        // const currentTodo = FindActiveTodo();
+        // currentTodo.name = todoTitle;
+        // currentTodo.dueDate = todoDate;
+        // currentTodo.priority = todoPriority;
+        // currentTodo.description = todoDescription;
+        const currentTodo = document.querySelector(".selected-todo");
+        const todoId = currentTodo.getAttribute("data-todo-id");
+        const activeProject = FindActiveProject();
+        const todoArray = activeProject.todoArray;
+        todoArray.forEach((todo) => {
+          if (todo.id === todoId) {
+            todo.name = todoTitle;
+            todo.dueDate = todoDate;
+            todo.priority = todoPriority;
+            todo.description = todoDescription;
+          }
+        });
+        UpdateMainDisplay(activeProject);
+    }
+
     todoModal.close();
     UpdateMainDisplay(project);
   });
