@@ -31,8 +31,8 @@ export function ScreenController() {
 
   // add new project to array
   function addProject(projectName) {
-    projectArray.push(CreateProject(projectName));
-  };
+    projectArray.push(new CreateProject(projectName));
+  }
 
   // remove existing project from array
   const removeProject = (id) => {
@@ -140,7 +140,8 @@ export function ScreenController() {
     mainContentContainer.appendChild(projectHeader);
 
     // check if project contains todos
-    if (projectObj.getTodoArray().length === 0) {
+    if (projectObj.todoArray.length === 0) {
+      console.log(projectObj.todoArray);
       return;
     }
 
@@ -149,15 +150,15 @@ export function ScreenController() {
     todoGroupContainer.classList.add("todo-group-container");
 
     // loop through the todos in current project
-    console.log(projectObj.getTodoArray());
-    projectObj.getTodoArray().forEach((todo) => {
+    console.log(projectObj.todoArray);
+    projectObj.todoArray.forEach((todo) => {
       const todoContainer = document.createElement("div");
       todoContainer.setAttribute("id", todo.id);
       todoContainer.classList.add("todo");
 
       const todoTitle = document.createElement("h2");
       todoTitle.classList.add("todo-title");
-      todoTitle.textContent = todo.title;
+      todoTitle.textContent = todo.name;
 
       const todoDescription = document.createElement("p");
       todoDescription.classList.add("todo-description");
@@ -260,10 +261,10 @@ export function ScreenController() {
   };
 
   // add new todo
-  function addNewTodo(project, title, dueDate, priority, description) {
+  function addNewTodo(project, name, dueDate, priority, description) {
     console.log(project);
-    project.addTodo(CreateTodo(title, dueDate, priority, description));
-    console.log(project.getTodoArray());
+    project.addTodo(new CreateTodo(name, dueDate, priority, description));
+    console.log(project.todoArray);
   }
 
   // remove existing todo
