@@ -112,10 +112,18 @@ export function ScreenController() {
       });
     }
 
-    // check if clicking on todo bin icon
+    // check if clicking on todo edit icon
     if (target.matches(".todo-edit")) {
       UpdateSidebarDisplay();
       UpdateMainDisplay(FindActiveProject());
+
+      // get elements
+      let todoTitle = document.getElementById("title");
+      let todoDate = document.getElementById("dueDate");
+      let todoDescription = document.getElementById("description");
+
+
+
       // console.log(activeProject);
       // clear all todos that are currently selected
       ClearClass("selected-todo");
@@ -128,18 +136,22 @@ export function ScreenController() {
         `[data-todo-id="${todoId}"]`
       );
       activeTodoEditBtn.classList.add("selected-todo");
-      // console.log(activeTodoEditBtn);
+       console.log(activeTodoEditBtn);
 
       // set addTodoBtn to edit mode
       addTodoBtn.classList.add("editModalSave");
 
       todoModal.showModal();
-      // const todoArray = activeProject.todoArray;
-      // todoArray.forEach((todo) => {
-      //   if (todo.id === todoId) {
-      //   }
-      //   UpdateMainDisplay(activeProject);
-      // });
+      const todoArray = activeProject.todoArray;
+      todoArray.forEach((todo) => {
+        if (todo.id === todoId) {
+          todoTitle.value = todo.name;
+          todoDate.value = todo.dueDate;
+          let todoPriority = document.getElementById(todo.priority);
+          todoPriority.checked = true;
+          todoDescription.value = todo.description;
+        }
+      });
     }
   });
 
