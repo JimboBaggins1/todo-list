@@ -114,8 +114,8 @@ export function ScreenController() {
 
     // check if clicking on todo edit icon
     if (target.matches(".todo-edit")) {
-      UpdateSidebarDisplay();
-      UpdateMainDisplay(FindActiveProject());
+      //UpdateSidebarDisplay();
+      //UpdateMainDisplay(FindActiveProject());
 
       // get elements
       let todoTitle = document.getElementById("title");
@@ -152,6 +152,13 @@ export function ScreenController() {
           todoDescription.value = todo.description;
         }
       });
+    }
+
+    // check if clicking on todo bin icon
+    if (target.matches(".todo-bin")) {
+      const idToRemove = target.getAttribute("data-todo-id");
+      activeProject.removeTodo(idToRemove);
+      UpdateMainDisplay(activeProject);
     }
   });
 
