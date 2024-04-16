@@ -6,23 +6,23 @@ export class CreateProject {
     }
     
     // private properties
-    #array = [];
 
     // properties
     id = uuidv4();
+    todoArray = [];
 
     // getters
-    get todoArray() {
-        return this.#array;
-    }
+    // get todoArray() {
+    //     return this.todoArray;
+    // }
 
     // methods
     addTodo(todo) {
-        return this.#array.push(todo);
+        return this.todoArray.push(todo);
     }
 
     removeTodo(id) {
-        return this.#array = this.#array.filter(elem => elem.id !== id)
+        return this.todoArray = this.todoArray.filter(elem => elem.id !== id)
     }
 }
 
