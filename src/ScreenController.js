@@ -1,12 +1,32 @@
-import { CreateProject } from "./ProjectFactory";
-import { CreateTodo } from "./TodoFactory";
+import { Project } from "./ProjectFactory";
+import { Todo } from "./TodoFactory";
 import Bin from "./images/bin-icon.svg";
 import Edit from "./images/edit-icon.svg";
 export function ScreenController(storageController) {
   // create array to store projects. Initialise with default project
-  let projectArray = [];
-  addProject("Today");
+  // let projectArray = [];
 
+  function displayStoredData() {
+    let projectArray = storageController.checkForStoredData();
+    if (projectArray === null) {
+      return projectArray = [];
+    }
+
+    for (let i = 0; i < projectArray.length; i++) {
+      projectArray[i] = Object.assign(new Project, projectArray[i]);
+      // console.log(projectArray[i]);
+
+      for (let j = 0; j < projectArray[i].todoArray; j++) {
+        projectArray[i].todoArray[j] = Object.assign(new Todo, projectArray[i].todoArray[j]);
+        console.log(projectArray[i].todoArray[j])
+      }
+    }
+    //UpdateMainDisplay(projectArray[0]);
+   // UpdateSidebarDisplay();
+
+    return projectArray;
+  }
+  //console.log(projectArray)
   // get element to append to
   const listContainer = document.querySelector(".list-container");
 
@@ -24,6 +44,13 @@ export function ScreenController(storageController) {
   const closeTodoModalBtn = document.getElementById("todoCancelBtn");
   const addTodoBtn = document.getElementById("todoConfirmBtn");
 
+  let projectArray = displayStoredData();
+  console.log(projectArray)
+
+  if (projectArray.length == 0) addProject("Today");
+  UpdateMainDisplay(projectArray[0]);
+  UpdateSidebarDisplay();
+
   // function to reset project modal
   const resetProjectModal = () => {
     document.getElementById("projectModalForm").reset();
@@ -31,7 +58,7 @@ export function ScreenController(storageController) {
 
   // add new project to array
   function addProject(projectName) {
-    projectArray.push(new CreateProject(projectName));
+    projectArray.push(new Project(projectName));
     storageController.updateProjectArray(projectArray);
   }
 
@@ -326,9 +353,9 @@ export function ScreenController(storageController) {
   // add new todo
   function addNewTodo(project, name, dueDate, priority, description) {
     console.log(project);
-    project.addTodo(new CreateTodo(name, dueDate, priority, description));
+    project.addTodo(new Todo(name, dueDate, priority, description));
     console.log(projectArray);
-    storageController.updateProjectArray(projectArray);
+    // storageController.updateProjectArray(projectArray);
   }
 
   // remove existing todo
@@ -388,9 +415,10 @@ export function ScreenController(storageController) {
             todo.description = todoDescription;
           }
         });
-        UpdateMainDisplay(activeProject);
+        break;
     }
-
+    UpdateMainDisplay(FindActiveProject());
+    storageController.updateProjectArray(projectArray);
     todoModal.close();
     UpdateMainDisplay(project);
   });
