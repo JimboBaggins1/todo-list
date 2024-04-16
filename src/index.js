@@ -2,8 +2,10 @@ import './style.css';
 import { CreateProject } from './ProjectFactory.js';
 import { CreateTodo } from './TodoFactory.js';
 import { ScreenController } from './ScreenController.js';
+import { StorageController } from './StorageController.js';
 
-ScreenController();
+const storageController = new StorageController();
+ScreenController(storageController);
 
 
 // let testProject = CreateProject('testProject');
