@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-export class CreateProject {
+export class Project {
     constructor(name) {
         this.name = name;
     }
@@ -30,7 +30,7 @@ export class CreateProject {
 
 
 //TODO: Clear this up when certain not needed
-// function CreateProject (name) {
+// function Project (name) {
 
 //     // define array to store todos
 //     let todoArray = [];

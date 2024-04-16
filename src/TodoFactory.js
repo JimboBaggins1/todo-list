@@ -1,6 +1,6 @@
 import {v4 as uuidv4 } from 'uuid';
 
-export class CreateTodo {
+export class Todo {
     constructor(name, dueDate, priority, description) {
         this.name = name,
         this.dueDate = dueDate,
@@ -38,7 +38,7 @@ export class CreateTodo {
 
 
 //TODO: Clear this up when certain not needed
-// function CreateTodo (title, dueDate, priority, description/*, notes*/) {
+// function Todo (title, dueDate, priority, description/*, notes*/) {
 
 
 //     // properties
