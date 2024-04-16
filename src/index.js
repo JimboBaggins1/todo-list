@@ -1,6 +1,6 @@
 import './style.css';
-import { CreateProject } from './ProjectFactory.js';
-import { CreateTodo } from './TodoFactory.js';
+import { Project } from './ProjectFactory.js';
+import { Todo } from './TodoFactory.js';
 import { ScreenController } from './ScreenController.js';
 import { StorageController } from './StorageController.js';
 
@@ -8,10 +8,10 @@ const storageController = new StorageController();
 ScreenController(storageController);
 
 
-// let testProject = CreateProject('testProject');
+// let testProject = Project('testProject');
 // console.log(testProject.getName());
-// testProject.addTodo(CreateTodo('testTodo'));
-// testProject.addTodo(CreateTodo('testTodo2'));
+// testProject.addTodo(Todo('testTodo'));
+// testProject.addTodo(Todo('testTodo2'));
 
 // console.log(testProject.getProjectArray()[0].id);
 // testProject.removeTodo(testProject.getProjectArray()[0].id)
