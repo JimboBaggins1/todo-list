@@ -2,7 +2,7 @@ import { CreateProject } from "./ProjectFactory";
 import { CreateTodo } from "./TodoFactory";
 import Bin from "./images/bin-icon.svg";
 import Edit from "./images/edit-icon.svg";
-export function ScreenController() {
+export function ScreenController(storageController) {
   // create array to store projects. Initialise with default project
   let projectArray = [];
   addProject("Today");
@@ -32,11 +32,13 @@ export function ScreenController() {
   // add new project to array
   function addProject(projectName) {
     projectArray.push(new CreateProject(projectName));
+    storageController.updateProjectArray(projectArray);
   }
 
   // remove existing project from array
   const removeProject = (id) => {
     projectArray = projectArray.filter((x) => x.id !== id);
+    storageController.updateProjectArray(projectArray);
   };
 
   // reset projectModalForm
@@ -157,7 +159,7 @@ export function ScreenController() {
     // check if clicking on todo bin icon
     if (target.matches(".todo-bin")) {
       const idToRemove = target.getAttribute("data-todo-id");
-      activeProject.removeTodo(idToRemove);
+      removeTodo(activeProject, idToRemove);
       UpdateMainDisplay(activeProject);
     }
   });
@@ -325,12 +327,14 @@ export function ScreenController() {
   function addNewTodo(project, name, dueDate, priority, description) {
     console.log(project);
     project.addTodo(new CreateTodo(name, dueDate, priority, description));
-    console.log(project.todoArray);
+    console.log(projectArray);
+    storageController.updateProjectArray(projectArray);
   }
 
   // remove existing todo
-  function removeTodo(id) {
-    const activeProject = FindActiveProject();
+  function removeTodo(project, id) {
+    project.removeTodo(id);
+    storageController.updateProjectArray(projectArray);
   }
 
   // reset todo modal
